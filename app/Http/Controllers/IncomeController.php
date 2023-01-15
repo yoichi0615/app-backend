@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Income;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class IncomeController extends Controller
 {
@@ -16,9 +16,13 @@ class IncomeController extends Controller
 
     public function getDailyTotalAmount(Request $request)
     {
+        $now = new Carbon();
+        $startDate = $now->startOfMonth()->startOfDay()->format('Y-m-d');
+        $endDate = $now->endOfMonth()->endOfDay()->format('Y-m-d');
         $result = \DB::table('incomes')
             ->select('user_id', 'date')
             ->where('user_id', 1)
+            ->whereBetween('date', [$startDate, $endDate])
             ->selectRaw('SUM(amount) AS total_amount')
             ->groupBy('date')
             ->get();
