@@ -19,7 +19,7 @@ class IncomeController extends Controller
     public function store(Request $request)
     {
         $income = $request->all();
-        $this->incomeRepo->store($income);
+        $this->incomeRepo->saveIncome($income);
         return response(['result' => true]);
     }
 

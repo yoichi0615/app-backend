@@ -7,7 +7,7 @@ use App\Models\Income;
 
 class IncomeRepository implements IncomeRepositoryInterface
 {
-    public function store($income)
+    public function saveIncome($income)
     {
         Income::create($income);
     }
