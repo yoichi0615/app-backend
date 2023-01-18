@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\IncomeRepositoryInterface;
-use App\Models\Income;
+use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -31,5 +31,27 @@ class IncomeController extends Controller
         $result = $this->incomeRepo->getDailyTotalAmount($startDate, $endDate);
 
         return response()->json($result);
+    }
+
+    public function getDailyAmount()
+    {
+        $now = new Carbon();
+        $startDate = $now->startOfMonth()->startOfDay()->format('Y-m-d');
+        $endDate = $now->endOfMonth()->endOfDay()->format('Y-m-d');
+        $data = $this->incomeRepo->getDailyTotalAmount($startDate, $endDate);
+
+        $dailyAmountData = $data->mapWithKeys(function ($_data) {
+            $day = Carbon::parse($_data->date)->format('j');
+            return [$day => $_data->total_amount];
+        });
+
+        $data = Collection::times(31, function ($index) use ($dailyAmountData) {
+            if (isset($dailyAmountData[$index])) {
+                return intval($dailyAmountData[$index]);
+            }
+            return 0;
+        });
+
+        return response()->json($data);
     }
 }
