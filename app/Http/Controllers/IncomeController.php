@@ -2,30 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\IncomeRepositoryInterface;
 use App\Models\Income;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 class IncomeController extends Controller
 {
+    private IncomeRepositoryInterface $incomeRepo;
+
+    public function __construct(IncomeRepositoryInterface $incomeRepository)
+    {
+        $this->incomeRepo = $incomeRepository;
+    }
+
     public function store(Request $request)
     {
-        Income::create($request->all());
+        $income = $request->all();
+        $this->incomeRepo->store($income);
         return response(['result' => true]);
     }
 
-    public function getDailyTotalAmount(Request $request)
+    public function getDailyTotalAmount()
     {
         $now = new Carbon();
         $startDate = $now->startOfMonth()->startOfDay()->format('Y-m-d');
         $endDate = $now->endOfMonth()->endOfDay()->format('Y-m-d');
-        $result = \DB::table('incomes')
-            ->select('user_id', 'date')
-            ->where('user_id', 1)
-            ->whereBetween('date', [$startDate, $endDate])
-            ->selectRaw('SUM(amount) AS total_amount')
-            ->groupBy('date')
-            ->get();
+        $result = $this->incomeRepo->getDailyTotalAmount($startDate, $endDate);
 
         return response()->json($result);
     }
