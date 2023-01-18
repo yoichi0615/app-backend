@@ -45,13 +45,15 @@ class IncomeController extends Controller
             return [$day => $_data->total_amount];
         });
 
-        $data = Collection::times(31, function ($index) use ($dailyAmountData) {
+        $monthDays = intval(Carbon::parse($endDate)->format('j'));
+
+        $amountData = Collection::times($monthDays, function ($index) use ($dailyAmountData) {
             if (isset($dailyAmountData[$index])) {
                 return intval($dailyAmountData[$index]);
             }
             return 0;
         });
 
-        return response()->json($data);
+        return response()->json($amountData);
     }
 }
