@@ -15,12 +15,12 @@ class IncomeRepository implements IncomeRepositoryInterface
     public function getDailyTotalAmount($startDate, $endDate)
     {
         $result = \DB::table('incomes')
-        ->select('user_id', 'date')
-        ->where('user_id', 1)
-        ->whereBetween('date', [$startDate, $endDate])
-        ->selectRaw('SUM(amount) AS total_amount')
-        ->groupBy('date')
-        ->get();
+            ->select('user_id', 'date')
+            ->where('user_id', 1)
+            ->whereBetween('date', [$startDate, $endDate])
+            ->selectRaw('SUM(amount) AS total_amount')
+            ->groupBy('date')
+            ->get();
 
         return $result;
     }
