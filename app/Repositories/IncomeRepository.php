@@ -24,4 +24,10 @@ class IncomeRepository implements IncomeRepositoryInterface
 
         return $result;
     }
+
+    public function getMonthlyData($targetStartDate, $targetEndDate)
+    {
+        $data = Income::whereBetween('date', [$targetStartDate, $targetEndDate])->get();
+        return $data;
+    }
 }

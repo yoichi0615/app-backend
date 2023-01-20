@@ -23,14 +23,30 @@ class IncomeController extends Controller
         return response(['result' => true]);
     }
 
+    public function getMonthlyData(Request $request)
+    {
+        if ($request->date) {
+            $targetDate = Carbon::create($request->date);
+            $targetStartDate = $targetDate->startOfMonth()->startOfDay()->format('Y-m-d');
+            $targetEndDate = $targetDate->endOfMonth()->format('Y-m-d');
+        } else {
+            $now = Carbon::now();
+            $targetStartDate = $now->startOfMonth()->startOfDay()->format('Y-m-d');
+            $targetEndDate = $now->endOfMonth()->endOfDay()->format('Y-m-d');
+        }
+
+        $data = $this->incomeRepo->getMonthlyData($targetStartDate, $targetEndDate);
+        return response()->json($data);
+    }
+
     public function getDailyTotalAmount()
     {
         $now = new Carbon();
         $startDate = $now->startOfMonth()->startOfDay()->format('Y-m-d');
         $endDate = $now->endOfMonth()->endOfDay()->format('Y-m-d');
-        $result = $this->incomeRepo->getDailyTotalAmount($startDate, $endDate);
+        $data = $this->incomeRepo->getDailyTotalAmount($startDate, $endDate);
 
-        return response()->json($result);
+        return response()->json($data);
     }
 
     public function getDailyAmount()
