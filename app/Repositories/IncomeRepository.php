@@ -7,9 +7,9 @@ use App\Models\Income;
 
 class IncomeRepository implements IncomeRepositoryInterface
 {
-    public function saveIncome($income)
+    public function saveIncome($requestData)
     {
-        Income::create($income);
+        Income::create($requestData);
     }
 
     public function getDailyTotalAmount($startDate, $endDate)
