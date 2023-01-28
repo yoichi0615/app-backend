@@ -20,6 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/income', [IncomeController::class, 'store'])->name('store');
-Route::get('/income', [IncomeController::class, 'getMonthlyData']);
+Route::get('/income', [IncomeController::class, 'getMonthlyData'])->name('get');
 Route::get('/total_income', [IncomeController::class, 'getDailyTotalAmount']);
 Route::get('/daily_amount', [IncomeController::class, 'getDailyAmount']);

@@ -24,7 +24,7 @@ class IncomeController extends Controller
     }
 
     public function getMonthlyData(Request $request)
-    {
+    {   
         if ($request->date) {
             $targetDate = Carbon::create($request->date);
             $targetStartDate = $targetDate->startOfMonth()->startOfDay()->format('Y-m-d');
