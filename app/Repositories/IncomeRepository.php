@@ -12,6 +12,12 @@ class IncomeRepository implements IncomeRepositoryInterface
         Income::create($requestData);
     }
 
+    public function getMonthlyData($targetStartDate, $targetEndDate)
+    {
+        $data = Income::whereBetween('date', [$targetStartDate, $targetEndDate])->get();
+        return $data;
+    }
+
     public function getDailyTotalAmount($startDate, $endDate)
     {
         $result = \DB::table('incomes')
@@ -21,13 +27,7 @@ class IncomeRepository implements IncomeRepositoryInterface
             ->selectRaw('SUM(amount) AS total_amount')
             ->groupBy('date')
             ->get();
-
+        
         return $result;
-    }
-
-    public function getMonthlyData($targetStartDate, $targetEndDate)
-    {
-        $data = Income::whereBetween('date', [$targetStartDate, $targetEndDate])->get();
-        return $data;
     }
 }
