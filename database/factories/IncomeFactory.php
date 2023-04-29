@@ -21,7 +21,7 @@ class IncomeFactory extends Factory
             'amount' => fake()->numberBetween($min = 1, $max = 1000),
             'category_id' => fake()->randomNumber(),
             'date' => fake()->date(),
-            'memo' => fake()->text()
+            'memo' => fake()->url()
         ];
     }
 }
