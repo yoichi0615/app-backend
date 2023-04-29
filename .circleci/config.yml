@@ -28,7 +28,6 @@ jobs:
       - run: sudo composer self-update
       - run: composer install -n --prefer-dist
       - run: npm ci
-      - run: npm run dev
       - run:
           name: phpunit
           command: vendor/bin/phpunit
