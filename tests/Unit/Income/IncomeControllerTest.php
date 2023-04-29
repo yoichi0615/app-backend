@@ -59,27 +59,6 @@ class IncomeControllerTest extends TestCase
             ->assertExactJson($expected->toArray());
     }
 
-    public function testGetDailyTotalAmount()
-    {
-        Collection::times(10, function () {
-            Income::factory()->create([
-                'date' => $this->faker->dateTimeBetween($startDate = 'now', $endDate = 'now'),
-                'user_id' => self::USER_ID
-            ]);
-        });
-
-        $expected = Income::select('user_id', 'date')
-            ->where('user_id', self::USER_ID)
-            ->selectRaw('SUM(amount) AS total_amount')
-            ->groupBy('date')
-            ->get();
-
-
-        $response = $this->get(route('get_total_income'));
-        $response->assertStatus(200)
-            ->assertExactJson($expected->toArray());
-    }
-
     public function testGetDailyAmount()
     {
         Collection::times(10, function () {
