@@ -25,7 +25,7 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
-      - run: sudo composer self-update --1
+      - run: sudo composer self-update
       - run: composer install -n --prefer-dist
       - run: npm ci
       - run: npm run dev
