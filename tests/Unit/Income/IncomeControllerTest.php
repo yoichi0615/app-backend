@@ -93,7 +93,7 @@ class IncomeControllerTest extends TestCase
         });
 
         $response = $this->get(route('get_daily_amount'));
-        $response->assertStatus(201)
+        $response->assertStatus(200)
             ->assertExactJson($amountData->toArray());
     }
 
