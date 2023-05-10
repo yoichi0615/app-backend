@@ -39,8 +39,6 @@ class IncomeControllerTest extends TestCase
             ]);
         // });
 
-        \Log::info(Income::all()->toArray());
-
         $request = isset($request['date']) ? $request : null;
         if ($request) {
             $targetDate = Carbon::create($request['date']);
