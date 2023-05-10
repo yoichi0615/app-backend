@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
+// Route::post('/register', [AuthController::class, 'register']);
+// Route::post('/login', [AuthController::class, 'login']);
+// Route::post('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
 Route::post('/income', [IncomeController::class, 'store'])->name('store');
 Route::get('/income', [IncomeController::class, 'getMonthlyData'])->name('get');
 Route::get('/total_income', [IncomeController::class, 'getDailyTotalAmount'])->name('get_total_income');
