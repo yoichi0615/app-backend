@@ -37,7 +37,7 @@ jobs:
       - run:
           name: phpunit
           command: vendor/bin/phpunit
-            deploy:
+  deploy:
     docker:
       - image: cimg/php:8.2.5-browsers
     steps:
