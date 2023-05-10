@@ -33,11 +33,11 @@ class IncomeControllerTest extends TestCase
      */
     public function testGetMonthlyData($request)
     {
-        // Collection::times(15, function () {
+        Collection::times(15, function () {
             Income::factory(5)->create([
                 'date' => $this->faker->dateTimeBetween($startDate = '2022-12-01', $endDate = '2023-06-11'),
             ]);
-        // });
+        });
 
         $request = isset($request['date']) ? $request : null;
         if ($request) {
