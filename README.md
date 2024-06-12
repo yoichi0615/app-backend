@@ -1,2 +1,2 @@
-## Infrastructure configuration diagram ＊　WIP
+## Infrastructure Configuration Diagram (WIP)
 ![](./infra.drawio.svg)
